@@ -1,0 +1,80 @@
+* Expresiones regulares
+** Comandos de python
+*** import re
+	Libreria
+*** pattern = r"[Inserte patron]"
+*** re.match(pattern, "string")
+	Encuentra si el patron corresponde al principio de string sino, None
+*** re.search(pattern, "string")
+    Encuentra si el patron existe en cualquier parte del string. Devuelve un objeto con varios metodos.
+    .group() : devuelve el patron
+    .start() : devuelve la posicion inicial
+    .end()   : devuelve la posicion final
+    .span()  : devuelve la tupla posicion inicial, final
+*** re.findall(pattern, "string")
+    Devuelve una lista con todas las subcadenas que coinciden con el patron
+*** re.sub(pattern, replace, string, count = 0)
+    Reemplaza todas las ocurrencias de "pattern" por "replace" en el string, "count" veces
+
+*** re.compile(pattern)
+	Compila el patron
+        result = re.match(pattern, string)
+    Es similar a
+	    obj = re.compile(pattern)
+		result = obj.match(string)
+** Metacaracteres
+  Para escapar los metacaracteres, se coloca \ delante, sin embargo esto puede causar problemas. \n por ej. es un caracter.
+  Para evitar esto se puede usar tres o cuatro barras, o usar cadenas puras, con una r delante de la cadena, ej r"algo", si este "algo" contiene "\n", lo considerará como dos caracteres, \ y n
+*** Caracteres de posicion
+  - .     empareja cualquier caracter, excepto una nueva linea
+  - ^     establece el inicio de cadena o una linea de cadena en modo multiline
+  - $     establece el final de cadena o una linea cadena en modo multiline
+
+*** Clases de caracter
+  - []    clase de caracter que coincide 1 caracter de los especificados en el corchete
+    1) [abc][def] coincidirá "ad" 
+    2) [a-z]      coincidirá 1 caracter de la a a la z
+    3) [G-P]      coincidirá 1 caracter de la G a la P
+    4) [0-9]      coincidirá 1 caracter de 0 a 9
+    5) [A-Za-z]   coincidira 1 caracter con cualquier letra
+  
+  - [^]   invierte la clase de caracter, i.e, coincide caracteres excepto los especificados por el corchete
+
+*** Caracteres de repeticion
+  - *     el caracter anterior existe 0 o mas veces
+  - +     el caracter anterior existe 1 o mas veces
+  - ?     el caracter anterior existe 0 o 1 ves
+  - {m,n} el caracter anterior existe entre m y n veces, si falta el primer numero se asume 0, si falta el segundo se asume infinito
+
+*** Grupos
+  ()    grupo se crea con parentesis, se puede usar con metacarácteres
+  Al usar el objeto re.match:
+  - el metodo .group() devuelve toda la coincidencia
+  - el metodo .group(n), con n>1, devuelve la coincidencia n, de izq a derecha
+  - el metodo .groups() devuelve todos los grupos a partir del primero
+
+  Metacarácter de grupo
+  - | empareja uno de los dos caracteres, (a|b) emparejara "a" o "b"
+
+  Se puede especificar grupos
+  - (?P<nombre>contenido) son grupos con nombres, pueden ser accedidos con .group("nombre")
+  - (?:contenido) son grupos sin nombre, no serán accedidos por .groups()
+  - AA(?!BB), coincide AA sólo si el siguiente string no es BB
+  - (?<!BB)AA, coincide AA sólo si el string anterior no es BB
+
+*** Secuencias especiales   
+   - \numero  Referencias a la coincidencia de un grupo, que ya se emparejó
+     Ej: r"(.+)(.+)(.+)\1"
+         repetirá el la coincidencia de el primer (.+)
+         si usamos "abc bca cab abc", hará match por  \1
+          \1 repetirá abc
+          \2 repetirá bca
+          \3 repetirá cab
+   - \d digitos, equivalente a [0-9]
+   - \s espacios en blanco, equivalente a "[\t\n\r\f\v]"
+   - \w caracteres alfanumericos, equivalente a [a-zA-Z0-9_]
+      Sus versiones en mayuscula significan lo contrario
+
+   - \A \Z, especifican principio y final de toda la cadena, ignorando saltos de linea
+   - \b (boundary) caracter no-alfanumerico justo despues de alguna letra y justo antes de la expresion a interés
+   - \B (boundary) caracter alfanumerico, opuesto  \b
