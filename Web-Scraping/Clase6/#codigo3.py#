@@ -1,0 +1,21 @@
+import csv
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+
+html = urlopen('https://en.wikipedia.org/wiki/Comparison_of_text_editors ')
+bs = BeautifulSoup(html, 'html5lib')
+
+table = bs.find_all('table')[0]
+rows = table.find_all('tr')
+
+writer = csv.writer(csvFile)
+
+try:
+    for row in rows:
+        csvRow = []
+        for cell in row.find_all(['td', 'th']):
+            # Todos los elementos de una fila
+            csvRow.append(cell.get_text())
+        writer.writerow(csvRow)
+finally:
+    csvFile.close()

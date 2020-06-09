@@ -84,9 +84,6 @@ siteData = [['Ufro Medios', 'http://www.ufromedios.cl/', 'h1 span', 'div.entry .
             ['Gamba.cl', 'http://www.gamba.cl', 'h1', 'div.post-content [style]:is(p):not(:has(script)), div.post-content strong, div.post-content .twitter-tweet']
             ]
 
-# v1 'div.post-content [style]:is(p, li):not(:has(script)), div.post-content .twitter-tweet'
-#
-
 # Lista de websites
 '''
 Luego podemos llamar el parser del crawler e indicarle
@@ -98,7 +95,6 @@ for row in siteData:
     websites.append(Website(row[0], row[1], row[2], row[3]))
 
 #crawler.parse(websites[0], 'http://www.ufromedios.cl/reporte-de-seremi-de-salud-informa-una-mujer-fallecida-en-renaico-y-19-contagios-nuevos-en-la-araucania/')
-
 
 #crawler.parse(websites[1],              'http://www.gamba.cl/2020/05/ya-van-6-meses-y-no-se-sabe-quien-quemo-el-metro-se-confirma-que-el-regimen-de-pinera-lo-quemo-para-justificar-sacar-los-militares-a-la-calle/')
 

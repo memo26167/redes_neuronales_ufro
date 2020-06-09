@@ -1,3 +1,4 @@
+# Código que obtiene paginas de la inicio de un website
 class Website:
     def __init__(self, name, url, targetPattern, absoluteUrl, titleTag, bodyTag):
         self.name = name
