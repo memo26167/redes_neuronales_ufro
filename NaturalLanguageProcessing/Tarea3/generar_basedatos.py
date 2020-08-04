@@ -106,7 +106,7 @@ def writeArticles(filename, articles, max_num_articles):
         for article in articles: #filas
             if articles_in_csv < max_num_articles:
                 print(articles_in_csv)
-                csvRow = [f'articulo{articles_in_csv}', article.body]
+                csvRow = [article.body]
                 writer.writerow(csvRow)
             articles_in_csv += 1
     finally:
